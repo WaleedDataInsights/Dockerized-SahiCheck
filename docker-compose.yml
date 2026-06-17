@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # The FastAPI application service
+  web:
+    build: .
+    container_name: sahicheck_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_URL=postgresql://postgres:admin123@db_postgres:5432/sahicheck_db
+      - MONGO_URL=mongodb://db_mongo:27017/
+    depends_on:
+      - db_postgres
+      - db_mongo
+    networks:
+      - sahicheck_network
+
+  # The Relational Database Service (Sir Rizwan's Audit Logging Layer)
+  db_postgres:
+    image: postgres:15-alpine
+    container_name: sahicheck_postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin123
+      - POSTGRES_DB=sahicheck_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - sahicheck_network
+
+  # The Non-Relational Document Store Service (Raw Input Payloads)
+  db_mongo:
+    image: mongo:6.0
+    container_name: sahicheck_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - sahicheck_network
+
+# Create an isolated bridge network for secure container-to-container connection
+networks:
+  sahicheck_network:
+    driver: bridge
+
+# Persist data locally so databases don't wipe out when containers stop
+volumes:
+  postgres_data:
+  mongo_data:

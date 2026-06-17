@@ -1,0 +1,104 @@
+====================================================
+SAHICHECK DEPLOYMENT GUIDE
+==========================
+
+1. REQUIREMENTS
+
+Before running the application, install:
+
+* Python 3.10 or later
+* Docker Desktop (Optional)
+* PostgreSQL
+* MongoDB
+
+---
+
+2. INSTALL PYTHON PACKAGES
+
+Open Command Prompt and run:
+
+pip install -r requirements.txt
+
+---
+
+3. RUN THE FASTAPI BACKEND
+
+Navigate to the source code folder and run:
+
+uvicorn app:app --reload
+
+If successful, the server will start on:
+
+http://localhost:8000
+
+---
+
+4. OPEN API DOCUMENTATION
+
+Open a browser and visit:
+
+http://localhost:8000/docs
+
+This page allows testing all API endpoints.
+
+---
+
+5. TEST THE MODULES
+
+Fake News Detection
+
+Submit news text through the API endpoint and view the prediction result.
+
+Phishing Detection
+
+Submit a URL and check whether it is classified as safe or phishing.
+
+Fraud Detection
+
+Submit transaction-related information and view the prediction result.
+
+---
+
+6. DATABASE STORAGE
+
+PostgreSQL is used for structured prediction logs.
+
+MongoDB is used for storing raw input data and detection history.
+
+---
+
+7. OPTIONAL DOCKER DEPLOYMENT
+
+Build Docker Image
+
+docker build -t sahicheck .
+
+Run Docker Container
+
+docker run -p 8000:8000 sahicheck
+
+---
+
+8. VERIFY DEPLOYMENT
+
+Open:
+
+http://localhost:8000
+
+Expected Response:
+
+SahiCheck Backend Running
+
+Open:
+
+http://localhost:8000/docs
+
+Expected Result:
+
+FastAPI Documentation Interface
+
+---
+
+9. PROJECT COMPLETION
+
+The application is ready for testing and demonstration after the backend server starts successfully.
